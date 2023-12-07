@@ -4,7 +4,6 @@
     ros2_repository_url: "http://packages.ros.org/ros2/ubuntu"
     # Options: bouncy; crystal; dashing (LTS); eloquent; foxy (LTS)
     ros2_distribution: foxy
-
     # Options: desktop (recommended); ros-base (bare bones)
     ros2_configuration: desktop
 
