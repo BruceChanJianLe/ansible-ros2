@@ -12,4 +12,6 @@ ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distrib
 ```
 
 ## About Sourcing
+Sourcing of ROS2 is not done automatically as of now, please refer to `.dotfiles/.bash_aliases` on how to add the source command.
+
 Reference: https://github.com/rarrais/ansible-role-ros2
