@@ -1,5 +1,6 @@
 # sudo apt update && sudo apt install curl gnupg2 lsb-release
 - name: Install dependencies for setting up sources
+  become: yes
   apt:
     name: "{{ packages }}"
     update_cache: yes
@@ -11,12 +12,14 @@
 
 # curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
 - name: Setup ROS2 keys
+  become: yes
   apt_key:
     url: "{{ ros2_gpg_key_url }}"
     state: present
 
 # sudo sh -c 'echo "deb [arch=amd64,arm64] http://packages.ros.org/ros2/ubuntu `lsb_release -cs` main" > /etc/apt/sources.list.d/ros2-latest.list'
 - name: Setup ROS2 sources
+  become: yes
   apt_repository:
     repo: "deb {{ ros2_repository_url }} {{ ansible_distribution_release }} main"
     state: present
@@ -24,6 +27,7 @@
 
 # sudo apt install ros-<distro>-ros-base
 - name: Install ROS2
+  become: yes
   apt:
     name: "{{ packages }}"
     update_cache: yes
@@ -33,9 +37,11 @@
 
 # sudo apt install python3-argcomplete
 - name: Install argcomplete (optional)
+  become: yes
   apt:
     name: python3-argcomplete
 
 - name: Install colcon to build packages
+  become: yes
   apt:
     name: python3-colcon-common-extensions
