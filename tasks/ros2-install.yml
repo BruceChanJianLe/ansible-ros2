@@ -1,4 +1,3 @@
-# sudo apt update && sudo apt install curl gnupg2 lsb-release
 - name: Install dependencies for setting up sources
   become: yes
   apt:
@@ -9,6 +8,22 @@
     - curl
     - gnupg2
     - lsb-release
+    - software-properties-common
+
+- name: Enable ubuntu universe repository
+  become: yes
+  apt_repository:
+    repo: deb http://archive.ubuntu.com/ubuntu focal universe
+    state: present
+    update_cache: True
+
+- name: Update Apt
+  become: true
+  apt:
+    upgrade: yes
+    force_apt_get: true
+    update_cache: true
+    state: present
 
 # curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
 - name: Setup ROS2 keys
@@ -17,11 +32,12 @@
     url: "{{ ros2_gpg_key_url }}"
     state: present
 
-# sudo sh -c 'echo "deb [arch=amd64,arm64] http://packages.ros.org/ros2/ubuntu `lsb_release -cs` main" > /etc/apt/sources.list.d/ros2-latest.list'
+# echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
 - name: Setup ROS2 sources
   become: yes
   apt_repository:
-    repo: "deb {{ ros2_repository_url }} {{ ansible_distribution_release }} main"
+    # [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg]
+    repo: "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] {{ ros2_repository_url }} {{ ansible_distribution_release }} main"
     state: present
     filename: ros2-latest
 
