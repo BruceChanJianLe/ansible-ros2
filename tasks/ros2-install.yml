@@ -13,7 +13,7 @@
 - name: Enable ubuntu universe repository
   become: yes
   apt_repository:
-    repo: deb http://archive.ubuntu.com/ubuntu focal universe
+    repo: deb http://archive.ubuntu.com/ubuntu jammy universe
     state: present
     update_cache: True
 
