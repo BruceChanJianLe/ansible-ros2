@@ -10,10 +10,16 @@
     - lsb-release
     - software-properties-common
 
+# - name: Obtain Ubuntu Code Name
+#   become: yes
+#   command: ""
+#   register: ubuntu_codename
+#   ignore_errors: yes
+
 - name: Enable ubuntu universe repository
   become: yes
   apt_repository:
-    repo: deb http://archive.ubuntu.com/ubuntu jammy universe
+    repo: "deb http://archive.ubuntu.com/ubuntu $(lsb_release -cs 2> /dev/null) universe"
     state: present
     update_cache: True
 
