@@ -20,4 +20,4 @@
       - setup
 
   tasks:
-    - include: tasks/ros2-install.yml
+    - include_tasks: tasks/ros2-install.yml
