@@ -11,7 +11,7 @@
   - name: Update Apt
     become: true
     apt:
-      upgrade: yes
+      upgrade: no
       force_apt_get: true
       update_cache: true
       cache_valid_time: 86400 #One day
