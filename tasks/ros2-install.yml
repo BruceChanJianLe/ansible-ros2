@@ -19,7 +19,7 @@
 - name: Enable ubuntu universe repository
   become: yes
   apt_repository:
-    repo: "deb http://archive.ubuntu.com/ubuntu $(lsb_release -cs 2> /dev/null) universe"
+    repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe"
     state: present
     update_cache: True
 
