@@ -10,12 +10,6 @@
     - lsb-release
     - software-properties-common
 
-# - name: Obtain Ubuntu Code Name
-#   become: yes
-#   command: ""
-#   register: ubuntu_codename
-#   ignore_errors: yes
-
 - name: Enable ubuntu universe repository
   become: yes
   apt_repository:
