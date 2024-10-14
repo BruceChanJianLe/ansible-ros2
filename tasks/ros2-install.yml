@@ -60,3 +60,10 @@
   become: yes
   apt:
     name: python3-colcon-common-extensions
+
+- name: Install ROS Dev Tools (only for jazzy)
+  become: yes
+  apt:
+    name: ros-dev-tools
+    state: present
+  when: ros2_distribution == "jazzy"
