@@ -10,12 +10,18 @@
     - lsb-release
     - software-properties-common
 
+- name: Check if the universe repository is already configured
+  ansible.builtin.shell: "grep -R '^deb .*universe' /etc/apt/sources.list /etc/apt/sources.list.d/"
+  register: universe_repo_check
+  ignore_errors: yes
+
 - name: Enable ubuntu universe repository
   become: yes
   apt_repository:
     repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe"
     state: present
     update_cache: True
+  when: universe_repo_check.rc != 0  # Only add if the grep command didn't find any matching repo
 
 - name: Update Apt
   become: true
