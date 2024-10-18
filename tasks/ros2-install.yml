@@ -11,8 +11,7 @@
     - software-properties-common
 
 - name: Check if the universe repository is already configured
-  ansible.builtin.shell: "grep -R '^deb .*universe' /etc/apt/sources.list /etc/apt/sources.list.d/"
-  args: /bin/bash
+  shell: "grep -R '^deb .*universe' /etc/apt/sources.list /etc/apt/sources.list.d/"
   register: universe_repo_check
   ignore_errors: yes
   changed_when: false  # Prevents marking this task as "changed" if no match is found
