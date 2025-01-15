@@ -18,11 +18,7 @@
 
 - name: Enable ubuntu universe repository
   become: yes
-  apt_repository:
-    repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe"
-    state: present
-    # update_cache: True
-    # filename: ubuntu_universe
+  shell: "add-apt-repository universe"
   when: universe_repo_check.rc != 0  # Only add if the grep command didn't find any matching repo
 
 - name: Update Apt
