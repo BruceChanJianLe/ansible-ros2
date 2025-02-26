@@ -44,7 +44,7 @@
     state: present
     filename: ros2
 
-# sudo apt install ros-<distro>-ros-base
+# sudo apt install ros-<distro>-ros-desktop
 - name: Install ROS2
   become: yes
   apt:
@@ -71,3 +71,9 @@
     name: ros-dev-tools
     state: present
   when: ros2_distribution == "jazzy"
+
+- name: Install Default Gazebo/ROS Pairing
+  become: yes
+  apt:
+    name: ros-jazzy-ros-gz
+    state: present
