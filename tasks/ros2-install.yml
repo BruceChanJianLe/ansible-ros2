@@ -18,7 +18,7 @@
 
 - name: Enable ubuntu universe repository
   become: yes
-  shell: "add-apt-repository universe"
+  shell: "add-apt-repository universe -y"
   when: universe_repo_check.rc != 0  # Only add if the grep command didn't find any matching repo
 
 - name: Update Apt
