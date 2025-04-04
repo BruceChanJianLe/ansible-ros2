@@ -77,3 +77,4 @@
   apt:
     name: ros-jazzy-ros-gz
     state: present
+  when: ros2_distribution == "jazzy"
