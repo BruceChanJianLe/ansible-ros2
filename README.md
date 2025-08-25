@@ -22,12 +22,12 @@ ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distrib
 ```
 
 ## About Sourcing
-Sourcing of ROS2 is not done automatically as of now, please refer to `.dotfiles/.bash_aliases` on how to add the source command.
+Sourcing of ROS2 is not done automatically as of now, please refer to [`.dotfiles/.bash_aliases`](https://github.com/BruceChanJianLe/dotfiles/blob/master/.bash_aliases)
+on how to add the source command.
 
-Reference: https://github.com/rarrais/ansible-role-ros2
 
 ## Reference
-
+- https://github.com/rarrais/ansible-role-ros2
 - https://linuxhint.com/manage_ubuntu_package_repositories_ppas_ansible/
 - https://stackoverflow.com/questions/58169348/how-is-the-architecture-fact-called-in-ansible
 - https://askubuntu.com/questions/1398344/apt-key-deprecation-warning-when-updating-system
