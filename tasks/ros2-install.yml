@@ -29,20 +29,52 @@
     update_cache: true
     state: present
 
-# sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
-- name: Setup ROS2 keys
-  become: yes
-  ansible.builtin.get_url:
-    url: "{{ ros2_gpg_key_url }}"
-    dest: /usr/share/keyrings/ros-archive-keyring.gpg
+- name: Get latest ROS APT source version from GitHub
+  shell: |
+    curl -s https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | \
+    grep -F "tag_name" | \
+    awk -F\" '{print $4}'
+  register: ros_apt_version
+  changed_when: false
 
-# echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
-- name: Setup ROS2 sources
+- name: Set fact for ROS_APT_SOURCE_VERSION
+  set_fact:
+    ROS_APT_SOURCE_VERSION: "{{ ros_apt_version.stdout }}"
+
+- name: Set codename (e.g., jammy, focal)
+  set_fact:
+    os_codename: "{{ ansible_lsb.codename }}"
+
+- name: Construct ROS APT .deb URL
+  set_fact:
+    ros_apt_deb_url: >-
+      https://github.com/ros-infrastructure/ros-apt-source/releases/download/{{ ROS_APT_SOURCE_VERSION }}/ros2-apt-source_{{ ROS_APT_SOURCE_VERSION }}.{{ os_codename }}_all.deb
+
+- name: Download ros2-apt-source .deb package
+  get_url:
+    url: "{{ ros_apt_deb_url }}"
+    dest: /tmp/ros2-apt-source.deb
+    mode: '0644'
+
+- name: Install ros2-apt-source .deb package
   become: yes
-  apt_repository:
-    repo: "deb [arch={{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }} signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] {{ ros2_repository_url }} {{ ansible_distribution_release }} main"
-    state: present
-    filename: ros2
+  apt:
+    deb: /tmp/ros2-apt-source.deb
+
+# # sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+# - name: Setup ROS2 keys
+#   become: yes
+#   ansible.builtin.get_url:
+#     url: "{{ ros2_gpg_key_url }}"
+#     dest: /usr/share/keyrings/ros-archive-keyring.gpg
+#
+# # echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+# - name: Setup ROS2 sources
+#   become: yes
+#   apt_repository:
+#     repo: "deb [arch={{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }} signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] {{ ros2_repository_url }} {{ ansible_distribution_release }} main"
+#     state: present
+#     filename: ros2
 
 # sudo apt install ros-<distro>-ros-desktop
 - name: Install ROS2
