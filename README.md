@@ -13,12 +13,12 @@ sudo apt install ansible git -y
 ## Usage
 Installing ROS2
 ```bash
-ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distribution=foxy" -K
+ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distribution=jazzy" -K
 ```
 
 For Docker
 ```bash
-ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distribution=foxy"
+ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distribution=jazzy"
 ```
 
 ## About Sourcing
