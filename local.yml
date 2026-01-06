@@ -6,6 +6,8 @@
     ros2_distribution: jazzy
     # Options: desktop (recommended); ros-base (bare bones)
     ros2_configuration: desktop
+    only_zsh_patch: false
+    zsh_tab_completion: false
 
   pre_tasks:
   - name: Update Apt
@@ -21,3 +23,6 @@
 
   tasks:
     - include_tasks: tasks/ros2-install.yml
+      when: only_zsh_patch == 'false'
+    - include_tasks: tasks/ros2-zsh-tab-completion.yml
+      when: zsh_tab_completion == 'true'
