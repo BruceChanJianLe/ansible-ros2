@@ -1,0 +1,71 @@
+- name: Check if the ros2topic api __init_.py file exists
+  stat:
+    path: /opt/ros/jazzy/lib/python3.12/site-packages/ros2topic/api/__init__.py
+  register: ros2topic_init_file
+
+- name: Fail if ros2topic api __init__.py file doesn't exist
+  fail:
+    msg: "File /opt/ros/jazzy/lib/python3.12/site-packages/ros2topic/api/__init__.py not found"
+  when: not ros2topic_init_file.stat.exists
+
+- name: Zsh tab completion patch for ros2topic api __init__.py file
+  blockinfile:
+    path: /opt/ros/jazzy/lib/python3.12/site-packages/ros2topic/api/__init__.py
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - zsh tab completion"
+    insertbefore: '^\s*return \[yaml_snippet\]'
+    block: |2
+              # Encode : -> =
+              if ':' in yaml_snippet:
+                  yaml_snippet = yaml_snippet.replace(":", "=")
+    backup: yes
+    create: no
+  register: file_modified
+  become: true
+
+- name: Check if the ros2topic api __init_.py file exists
+  stat:
+    path: /opt/ros/jazzy/lib/python3.12/site-packages/ros2topic/api/__init__.py
+  register: ros2topic_init_file
+
+- name: Fail if ros2topic api __init__.py file doesn't exist
+  fail:
+    msg: "File /opt/ros/jazzy/lib/python3.12/site-packages/ros2topic/api/__init__.py not found"
+  when: not ros2topic_init_file.stat.exists
+
+- name: Zsh tab completion patch for ros2topic api __init__.py file
+  blockinfile:
+    path: /opt/ros/jazzy/lib/python3.12/site-packages/ros2topic/api/__init__.py
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - zsh tab completion"
+    insertbefore: '^\s*return \[yaml_snippet\]'
+    block: |2
+              # Encode : -> =
+              if ':' in yaml_snippet:
+                  yaml_snippet = yaml_snippet.replace(":", "=")
+    backup: yes
+    create: no
+  become: true
+
+- name: Check if pub.py file exists
+  stat:
+    path: /opt/ros/jazzy/lib/python3.12/site-packages/ros2topic/verb/pub.py
+  register: pub_file
+
+- name: Fail if pub.py doesn't exist
+  fail:
+    msg: "File /opt/ros/jazzy/lib/python3.12/site-packages/ros2topic/verb/pub.py not found"
+  when: not pub_file.stat.exists
+
+- name: Add decoding logic to pub.py before yaml.safe_load
+  blockinfile:
+    path: /opt/ros/jazzy/lib/python3.12/site-packages/ros2topic/verb/pub.py
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - zsh tab completion"
+    insertbefore: '^\s*values_dictionary = yaml\.safe_load\(values\)'
+    block: |2
+              # Decode = -> :
+              if '=' in values:
+                  values = values.replace("=", ':')
+              if "'" in values:
+                  values = values.replace("'", '')
+    backup: yes
+    create: no
+  become: true
