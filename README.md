@@ -11,14 +11,26 @@ sudo apt install ansible git -y
 ```
 
 ## Usage
-Installing ROS2
+Installing ROS2 only  
 ```bash
 ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distribution=jazzy" -K
 ```
 
+Installing ROS2 and zsh tab completion patch  
+```bash
+ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distribution=jazzy zsh_tab_completion=true" -K
+```
+
 For Docker
 ```bash
-ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distribution=jazzy"
+ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distribution=jazzy zsh_tab_completion=true"
+```
+
+## Zsh Tab Completion Patch
+
+This would only run the patch for zsh tab completion!  
+```bash
+ansible-playbook local.yml -e "only_zsh_patch=true zsh_tab_completion=true" -K
 ```
 
 ## About Sourcing
