@@ -32,6 +32,7 @@ This would only run the patch for zsh tab completion!
 ```bash
 ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "only_zsh_patch=true zsh_tab_completion=true ros2_distribution=jazzy" -K
 ```
+[!zsh_tab_completion_demo](https://github.com/user-attachments/assets/24ab19a7-fd51-460e-ad1a-b1333e8a97e8)
 
 ## About Sourcing
 Sourcing of ROS2 is not done automatically as of now, please refer to [`.dotfiles/.bash_aliases`](https://github.com/BruceChanJianLe/dotfiles/blob/master/.bash_aliases)
