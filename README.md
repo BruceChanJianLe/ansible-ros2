@@ -30,7 +30,7 @@ ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "ros2_distrib
 
 This would only run the patch for zsh tab completion!  
 ```bash
-ansible-playbook local.yml -e "only_zsh_patch=true zsh_tab_completion=true" -K
+ansible-pull -U https://github.com/brucechanjianle/ansible-ros2 -e "only_zsh_patch=true zsh_tab_completion=true" -K
 ```
 
 ## About Sourcing
