@@ -6,8 +6,8 @@
     ros2_distribution: jazzy
     # Options: desktop (recommended); ros-base (bare bones)
     ros2_configuration: desktop
-    only_zsh_patch: false
-    zsh_tab_completion: false
+    only_zsh_patch: 'false'
+    zsh_tab_completion: 'false'
 
   pre_tasks:
   - name: Update Apt
